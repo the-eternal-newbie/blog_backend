@@ -22,8 +22,18 @@ export default class userController {
         return(res.json(delComment));
     }
 
+    async updateComment(req, res) {
+        const commentData = req.body;
+        const updatedComment = await CommentModel.findByPk(req.params.id);
+        await updatedComment.update(commentData);
+        return(res.json(updatedComment));
+    }
+
     async listComments(req, res) {
         const comments = await CommentModel.findAll({
+            order: [
+                ['id', 'ASC']
+            ],
             include: [
                 {
                     model: UserModel,

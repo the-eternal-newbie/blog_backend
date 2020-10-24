@@ -4,8 +4,9 @@ const router = express.Router();
 const controller = new userController();
 
 router.post('/', controller.create);
-router.get('/comments', controller.listComments);
-router.post('/comments', controller.addComment);
+router.get('/comments/', controller.listComments);
+router.post('/comments/', controller.addComment);
+router.put('/comments/:id', controller.updateComment);
 router.delete('/comments/:id', controller.deleteComment);
 
 

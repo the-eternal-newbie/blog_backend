@@ -3,7 +3,7 @@ import User from './models/user';
 import Comment from './models/comment';
 
 export const sequelize = new Sequelize(
-    process.env.DB_URL || 'postgres://postgres:postgres@psql_blog:5432/blog-db',
+    process.env.DB_URL || 'postgres://postgres:postgres@localhost:5431/blog-db',
     {
         dialect: "postgres",
     }
