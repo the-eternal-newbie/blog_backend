@@ -1,0 +1,37 @@
+version: '3'
+
+services:
+    backend:
+        build: .
+        container_name: blog_backend
+        restart: always
+        environment:
+            - PORT=${PORT}
+            - DB_URL=${DB_URL}
+        expose:
+            - ${PORT}
+        ports:
+            - ${PORT}:${PORT}
+        depends_on:
+            - psql_blog
+        volumes:
+            - ./controllers:/blog-app/controllers
+            - ./db:/blog-app/db
+            - ./public:/blog-app/public
+            - ./routes:/blog-app/routes
+            - ./routes:/blog-app/views
+            - ./app.js:/blog-app/app.js
+        command: bash -c 'chmod +x ./wait-for-it.sh && ./wait-for-it.sh psql_blog:5432 && npm run start:dev'
+
+    psql_blog:
+        container_name: psql_blog
+        image: postgres:10.1-alpine
+        restart: always
+        environment:
+            - POSTGRES_PASSWORD=postgres
+            - POSTGRES_USER=postgres
+            - POSTGRES_DB=blog-db
+        expose:
+            - '5432'
+        ports:
+            - '5431:5432'
